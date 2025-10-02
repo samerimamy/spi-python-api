@@ -1,0 +1,7 @@
+StudentId,Semester,GPA,EmployedWithin6Months,Course,Grade
+1001,2024-Fall,3.2,1,Programming,78
+1002,2024-Fall,2.1,0,Programming,51
+1003,2024-Fall,3.6,1,Systems,86
+1004,2025-Spring,2.9,1,Analytics,73
+1005,2025-Spring,1.8,0,Programming,48
+1006,2025-Spring,3.4,1,Systems,82
