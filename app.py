@@ -1,11 +1,11 @@
-from fastapi import FastAPI, UploadFile, File
 import pandas as pd
+from fastapi import FastAPI, UploadFile, File
 
 app = FastAPI()
 
 @app.get("/")
-async def root():
-    return {"message": "Welcome to SPI Python API"}
+def root():
+    return {"message": "SPI Python API is running"}
 
 @app.post("/analyze_csv/")
 async def analyze_csv(file: UploadFile = File(...)):
@@ -18,7 +18,7 @@ async def analyze_csv(file: UploadFile = File(...)):
 
     return {
         "average": round(avg_score, 2),
-        "highest": max_score,
-        "lowest": min_score,
+        "highest": int(max_score),
+        "lowest": int(min_score),
         "failure_rate": round(fail_rate, 2)
     }
