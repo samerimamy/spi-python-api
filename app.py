@@ -1,9 +1,7 @@
-import os
-import uvicorn
 from fastapi import FastAPI, UploadFile, File
 import pandas as pd
 
-app = FastAPI()   # <- uvicorn looks for this "app"
+app = FastAPI()
 
 @app.get("/")
 async def root():
@@ -24,8 +22,3 @@ async def analyze_csv(file: UploadFile = File(...)):
         "lowest": min_score,
         "failure_rate": round(fail_rate, 2)
     }
-
-# ✅ Ensure Render uses the correct port
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
