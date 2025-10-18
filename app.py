@@ -1,14 +1,10 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from clo_analytics_service2 import load_course_data, load_grades_csv, compute_clo
-import tempfile
-import os
+import tempfile, os
 
 app = FastAPI()
 
-# -----------------------------
-# Allow Blazor & local access
-# -----------------------------
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,22 +13,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# -----------------------------
-# Root route
-# -----------------------------
 @app.get("/")
 def root():
     return {"message": "Python Analytics Server is running"}
 
-# -----------------------------
-# CLO Analytics endpoint
-# -----------------------------
 @app.post("/process_clo")
-async def process_clo(course_code: str, file: UploadFile = File(...)):
+async def process_clo(course_code: str = Form(...), file: UploadFile = File(...)):
+    """Receive a cleaned CSV from Blazor, run CLO analytics, and return table."""
     try:
-        import tempfile, os
-        from clo_analytics_service2 import load_course_data, load_grades_csv, compute_clo
-
         tmp_dir = tempfile.gettempdir()
         filename = os.path.basename(file.filename).replace("\\", "_").replace("/", "_")
         temp_path = os.path.join(tmp_dir, filename)
