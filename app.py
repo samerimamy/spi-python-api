@@ -20,11 +20,9 @@ app.add_middleware(
 # -----------------------------
 # Root route
 # -----------------------------
-from fastapi import FastAPI, UploadFile, File, Form
-
-@app.post("/process_clo")
-async def process_clo(course_code: str = Form(...), file: UploadFile = File(...)):
-
+@app.get("/")
+def root():
+    return {"message": "Python Analytics Server is running"}
 
 # -----------------------------
 # CLO Analytics endpoint
