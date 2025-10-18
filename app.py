@@ -11,20 +11,32 @@ app = FastAPI()
 async def process_clo(course_code: str, file: UploadFile = File(...)):
     """Receive a cleaned CSV from Blazor, run CLO analytics, and return table."""
     try:
-        # 1️⃣ Save uploaded file temporarily
+        import tempfile, os
+
+        # 1️⃣ Get system temp directory (cross-platform)
+        tmp_dir = tempfile.gettempdir()
+
+        # 2️⃣ Sanitize filename (just use base name, no slashes)
+        filename = os.path.basename(file.filename).replace("\\", "_").replace("/", "_")
+
+        # 3️⃣ Build valid path
+        temp_path = os.path.join(tmp_dir, filename)
+        print(f"Saving uploaded file to: {temp_path}")
+
+        # 4️⃣ Write file content
         contents = await file.read()
-        temp_path = os.path.join("/tmp", file.filename)
         with open(temp_path, "wb") as f:
             f.write(contents)
 
-        # 2️⃣ Load course configuration
+        # 5️⃣ Proceed with analysis
         clo_df, assessments = load_course_data(course_code)
-
-        # 3️⃣ Run CLO analytics
         df = load_grades_csv(temp_path, list(assessments.keys()))
         result = compute_clo(df, clo_df, assessments)
 
-        # 4️⃣ Return as JSON
+        # 6️⃣ Clean up
+        try: os.remove(temp_path)
+        except: pass
+
         return result.to_dict(orient="records")
 
     except Exception as e:
