@@ -1,0 +1,17 @@
+{
+  "course_code": "MISY2313",
+  "assessments": {
+    "Mid 1": 15,
+    "Mid 2": 15,
+    "Assign": 30,
+    "Project": 20,
+    "Final": 20
+  },
+  "clo_weights": [
+    {"CLO": "CLO1.1", "Mid 1": 30, "Mid 2": 30, "Assign": 20, "Project": 10, "Final": 10},
+    {"CLO": "CLO1.2", "Mid 1": 10, "Mid 2": 20, "Assign": 20, "Project": 20, "Final": 30},
+    {"CLO": "CLO2.1", "Mid 1": 0, "Mid 2": 30, "Assign": 30, "Project": 10, "Final": 30},
+    {"CLO": "CLO2.2", "Mid 1": 0, "Mid 2": 0, "Assign": 0, "Project": 100, "Final": 0},
+    {"CLO": "CLO3.1", "Mid 1": 0, "Mid 2": 0, "Assign": 0, "Project": 100, "Final": 0}
+  ]
+}
